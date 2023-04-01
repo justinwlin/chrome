@@ -1,5 +1,5 @@
-# ARG BASE_VERSION=1.21.0
-FROM browserless/base:latest
+ARG BASE_VERSION=1.21.0
+FROM browserless/base:${BASE_VERSION}
 
 # Build Args
 ARG USE_CHROME_STABLE
@@ -84,12 +84,8 @@ RUN apt-get update \
     tgt \
     youtube-dl \
     Pillow \
+    aeneas \
  && apt-get clean
-
-RUN pip3 install aeneas
-# Copy requirements.txt and install Python dependencies
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
 
 ENV PYTHONIOENCODING=UTF-8
 
@@ -101,4 +97,5 @@ EXPOSE ${PORT}
 
 CMD ["./start.sh"]
 
-# docker build --platform linux/arm64 . -t root-puppeteer 
+# docker run -v $(pwd):/app -itd
+# docker run -v /Users/justinwlin/Documents/GitHub/tiktok:/usr/src/app/tiktok -p 3000:3000 -it de17842268d6be7d96165e6f3ad032086c19e9ed58aec2898e70394c9ffab893
